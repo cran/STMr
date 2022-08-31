@@ -5,15 +5,16 @@
 \title{Plotting of the Progression Table}
 \usage{
 plot_progression_table(
-  progression_table = progression_RIR_increment,
+  progression_table,
   plot = "\%1RM",
   signif_digits = 3,
   adjustment_multiplier = 1,
+  font_size = 14,
   ...
 )
 }
 \arguments{
-\item{progression_table}{Function for creating progression table. Default is \code{\link{progression_RIR_increment}}}
+\item{progression_table}{Function for creating progression table}
 
 \item{plot}{Character string. Options include "\%1RM" (default) and "adjustment"}
 
@@ -22,21 +23,24 @@ plot_progression_table(
 \item{adjustment_multiplier}{Factor to multiply the adjustment. Useful when converting to percentage.
 Default is 1}
 
-\item{...}{Forwarder to the \code{\link{generate_progression_table}} function}
+\item{font_size}{Numeric. Default is 14}
+
+\item{...}{Forwarded to the \code{\link{generate_progression_table}} function}
 }
 \value{
 \code{ggplot2} object
 }
 \description{
-Functions for creating \code{ggplot2} plot of the Progression Table
+Function for creating \code{ggplot2} plot of the Progression Table
 }
 \examples{
-plot_progression_table(progression_RIR_increment, "\%1RM")
-plot_progression_table(progression_RIR_increment, "adjustment")
+plot_progression_table(progression_RIR_increment, "\%1RM", reps = 1:5)
+plot_progression_table(progression_RIR_increment, "adjustment", reps = 1:5)
 
 # Create progression pot by using specific reps-max table and klin value
 plot_progression_table(
   progression_RIR,
+  reps = 1:5,
   max_perc_1RM_func = max_perc_1RM_linear,
   klin = 36
 )

@@ -1,3 +1,35 @@
+# STMr 0.1.4
+
+* Fixed a bug in `scheme_rep_acc()` - now the END rep and step is used, and the reps are counted backwards as intended
+* Added comment in the `vertical_generic()` and `vertical_rep_accumulation()` to avoid generating rep accumulation schme using those two functions, but rather using `scheme_rep_acc()`
+* Formatting error in `scheme_()` functions
+* Changed default progression table to `progression_perc_drop` in all `scheme_()` functions
+* Changed default vertical planning to `vertical_const` in all `scheme_()` functions
+* Fixed a bug in `scheme_light_heavy()` - now it takes the highest rep and use that to estimate %1RMs
+* Added `scheme_ladder()` set and rep scheme
+* Added `.vertical_rep_accumulation.post()` function. This functions is to be applied AFTER scheme is generated. Other options is to use `scheme_rep_acc()` function, that is flexible enough to generate most schemes, except for the `scheme_ladder()` and `scheme_light_heavy()`
+* Added `vertical_block_undulating()` vertical planning function. This is a combination of Block Variant (undulation in the steps) and Undulating (undulation in reps)
+* Fixed a "corner case" bug in `scheme_generic()`, where `vertical_set_accumulation` didn't repeat the adjustments, which cause problems if only single set is accumulated. This is because the adjustments were not accumulated, but rather "recycled". 
+* Changed the parameter name from `accumulate_rep` to `accumulate_set` in `vertical_set_accumulation()` and `vertical_set_accumulation_reverse()` functions
+* Expanded the README.Rmd to include the discussion on Rep Accumulation scheme
+* Added extra features to `vertical_set_accumulation()` and `vertical_set_accumulation_reverse()` (see sequence argument)
+* Fixed the default arguments for `adjustment` in the `scheme_` functions. Now they are flexible, depending on the `reps` argument, but follow the general logic of a given scheme.  
+* Improved and simplified scheme plotting in `plot_scheme()` function. Removed {ggstance} from package dependencies
+* Added `font_size` arguments to `plot_scheme()` and `plot_progression_table()` functions
+* Removed default progression table from `generate_progression_table()`, `create_example()`, `plot_progression_table()` functions
+* Added `plot_vertical()` function for plotting vertical plan
+* Created `STMr_scheme` class (subclass of data frame), and now scheme can be plotted by using simple S3 `plot` method. `plot_scheme()` function is now deprecated. Added three types of plots: `bar`, `vertical`, and `fraction`. The `STMr_scheme` class has now the following columns: `index`, `step`, `set`, `reps`, `adjustment`, and `perc_1RM`.
+* Added `STMr_vertical` constructor. Now the `vertical_` functions return `STMr_vertical` data frame object with following column names: `index`, `step`, `set`, `set_id`, and `reps`. `set_id` is needed to sort out an issue (see above) for the `vertical_set_accumulation()` and `vertical_set_accumulation_reverse()` vertical plans when adjustment is applied inside `scheme_generic()` function 
+* In the output of the `scheme_light_heavy()` and `scheme_ladder()` functions, I have set `adjustment` to `NA` since to avoid confusing the user. This is because due to the modifications that these functions does to the "light" sets, the adjustment is not applicable and not related to selected progression table
+* Added `{ggfittext}` package dependency, so the plot labels are now flexible and fit the "container". This can be useful when set accumulation is used, so the labels do not go outside of the bars
+* Added `reps_change` to `vertical_set_accumulation()` and `vertical_set_accumulation_reverse()`, making them really flexible functions
+* Added `scheme_manual()` for manual generation of the scheme, which provides for the ultimate flexibility
+* Added `perc_str` argument to `plot()` S3 method, which allows the user to remove "%" and thus have more space for label
+* Created `release` function and S3 `plot` method for merging multiple schemes (i.e., blocks or phases) into one release. This is used to inspect how multiple back-to-back phases mold together
+* Added `perc_1RM` argument to `scheme_manual()` for the user to provide manual 1RM percentages, rather than to be estimated
+* Added `scheme_perc_1RM()` which is simpler `scheme_manual()` for manually entering 1RM percentages. For example creating simple warm-up scheme 
+* Added `+` method for `STMr_scheme` objects. This allows for easy modular adding of the schemes
+
 # STMr 0.1.3
 
 * Changed the STMr to 'STMr' in the DESCRIPTION as per CRAN member recommendation
@@ -61,6 +93,7 @@ over the course of 12 weeks (4 phases, each 3 weeks long). Individual eRIR (esti
 * Added `get_max_perc_1RM_kmod()`, `get_max_reps_kmod()`, and `get_predicted_1RM_kmod()` functions that uses user defined `kmod` value/parameter for the modified Epley's equation
 Added `get_max_perc_1RM_klin()`, `get_max_reps_klin()`, and `get_predicted_1RM_klin()` functions that uses user defined `klin` value/parameter for the linear equation
 * Added `estimate_` family of functions to estimate Epley's, modified Epley's, and linear equation parameters, as well as novel estimation functions that uses absolute weight to estimate both `k`, `kmod`, `klin` and `1RM` parameters
+* Added missing `font_size` when plotting adjustments using `plot_progression_table()`
 
 # STMr 0.0.1
 

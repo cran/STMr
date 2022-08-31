@@ -16,7 +16,7 @@
 \title{Family of functions to create progression tables}
 \usage{
 generate_progression_table(
-  progression_table = progression_RIR_increment,
+  progression_table,
   type = c("grinding", "ballistic"),
   volume = c("intensive", "normal", "extensive"),
   reps = 1:12,
@@ -103,8 +103,7 @@ progression_rel_int(
 )
 }
 \arguments{
-\item{progression_table}{Progression table function to use. Default is
-\code{\link{progression_RIR_increment}}}
+\item{progression_table}{Progression table function to use}
 
 \item{type}{Character vector. Type of max rep table. Options are grinding (Default) and ballistic.}
 
@@ -134,32 +133,32 @@ Family of functions to create progression tables
 }
 \section{Functions}{
 \itemize{
-\item \code{generate_progression_table}: Generates progression tables
+\item \code{generate_progression_table()}: Generates progression tables
 
-\item \code{progression_DI}: Deducted Intensity progression table. This simplest progression
+\item \code{progression_DI()}: Deducted Intensity progression table. This simplest progression
 table simply deducts intensity to progress. Adjust this deducted by using the
 \code{deduction} parameter (default is equal to -0.025)
 
-\item \code{progression_RIR}: Constant RIR Increment progression table. This variant have constant RIR
+\item \code{progression_RIR()}: Constant RIR Increment progression table. This variant have constant RIR
 increment across reps from phases to phases and RIR difference between extensive, normal, and
 intensive schemes. Use \code{step_increment} and  \code{volume_increment} parameters to
 utilize needed increments
 
-\item \code{progression_RIR_increment}: RIR Increment progression table (see Strength Training Manual)
+\item \code{progression_RIR_increment()}: RIR Increment progression table (see Strength Training Manual)
 
-\item \code{progression_perc_MR}: Constant \%MR Step progression table. This variant have constant \%MR
+\item \code{progression_perc_MR()}: Constant \%MR Step progression table. This variant have constant \%MR
 increment across reps from phases to phases and \%MR difference between extensive, normal, and
 intensive schemes. Use \code{step_increment} and  \code{volume_increment} parameters to
 utilize needed increments
 
-\item \code{progression_perc_MR_variable}: Variable \%MR Step progression table
+\item \code{progression_perc_MR_variable()}: Variable \%MR Step progression table
 
-\item \code{progression_perc_drop}: Perc Drop progression table (see Strength Training Manual)
+\item \code{progression_perc_drop()}: Perc Drop progression table (see Strength Training Manual)
 
-\item \code{progression_rel_int}: Relative Intensity progression table. Use \code{step_increment}
+\item \code{progression_rel_int()}: Relative Intensity progression table. Use \code{step_increment}
 and  \code{volume_increment} parameters to utilize needed increments
-}}
 
+}}
 \examples{
 generate_progression_table(progression_RIR)
 
@@ -201,9 +200,6 @@ generate_progression_table(
   klin = 36
 )
 
-# Plot progression table
-plot_progression_table(progression_DI)
-plot_progression_table(progression_DI, "adjustment")
 # ------------------------------------------
 # Progression RIR Constant
 progression_RIR(10, step = seq(-3, 0, 1))
@@ -248,10 +244,6 @@ generate_progression_table(
   max_perc_1RM_func = max_perc_1RM_linear,
   klin = 36
 )
-
-# Plot progression table
-plot_progression_table(progression_RIR_increment)
-plot_progression_table(progression_RIR_increment, "adjustment")
 # ------------------------------------------
 # Progression \%MR Step Const
 progression_perc_MR(10, step = seq(-3, 0, 1))
@@ -277,9 +269,6 @@ generate_progression_table(
   klin = 36
 )
 
-# Plot progression table
-plot_progression_table(progression_perc_MR)
-plot_progression_table(progression_perc_MR, "adjustment")
 # ------------------------------------------
 # Progression \%MR Step Variable
 progression_perc_MR_variable(10, step = seq(-3, 0, 1))
@@ -296,10 +285,6 @@ generate_progression_table(
   max_perc_1RM_func = max_perc_1RM_linear,
   klin = 36
 )
-
-# Plot progression table
-plot_progression_table(progression_perc_MR_variable)
-plot_progression_table(progression_perc_MR_variable, "adjustment")
 # ------------------------------------------
 # Progression Perc Drop
 progression_perc_drop(10, step = seq(-3, 0, 1))
@@ -317,10 +302,6 @@ generate_progression_table(
   max_perc_1RM_func = max_perc_1RM_linear,
   klin = 36
 )
-
-# Plot progression table
-plot_progression_table(progression_perc_drop)
-plot_progression_table(progression_perc_drop, "adjustment")
 # ------------------------------------------
 # Progression Relative Intensity
 progression_rel_int(10, step = seq(-3, 0, 1))
@@ -339,17 +320,13 @@ generate_progression_table(
   max_perc_1RM_func = max_perc_1RM_linear,
   klin = 36
 )
-
-# Plot progression table
-plot_progression_table(progression_rel_int)
-plot_progression_table(progression_rel_int, "adjustment")
 }
 \references{
-\preformatted{Jovanović M. 2020. Strength Training Manual: The Agile Periodization Approach.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Jovanović M. 2020. Strength Training Manual: The Agile Periodization Approach.
 Independently published.
-}
+}\if{html}{\out{</div>}}
 
-\preformatted{Jovanović M. 2020. Strength Training Manual: The Agile Periodization Approach.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Jovanović M. 2020. Strength Training Manual: The Agile Periodization Approach.
 Independently published.
-}
+}\if{html}{\out{</div>}}
 }

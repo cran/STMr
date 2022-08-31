@@ -12,64 +12,67 @@
 \alias{scheme_pyramid}
 \alias{scheme_pyramid_reverse}
 \alias{scheme_rep_acc}
+\alias{scheme_ladder}
+\alias{scheme_manual}
+\alias{scheme_perc_1RM}
 \title{Set and Rep Schemes}
 \usage{
 scheme_generic(
-  reps = c(5, 5, 5),
-  adjustment = c(0, 0, 0),
-  vertical_planning = vertical_linear,
+  reps,
+  adjustment,
+  vertical_planning,
   vertical_planning_control = list(),
-  progression_table = progression_RIR_increment,
+  progression_table,
   progression_table_control = list()
 )
 
 scheme_wave(
-  reps = c(10, 8, 6, 10, 8, 6),
-  adjustment = c(4, 2, 0, 6, 4, 2),
-  vertical_planning = vertical_linear,
-  vertical_planning_control = list(),
-  progression_table = progression_RIR_increment,
-  progression_table_control = list(volume = "extensive")
-)
-
-scheme_plateau(
-  reps = c(5, 5, 5, 5),
-  vertical_planning = vertical_constant,
-  vertical_planning_control = list(),
-  progression_table = progression_RIR_increment,
-  progression_table_control = list(volume = "extensive")
-)
-
-scheme_step(
-  reps = c(5, 5, 5, 5),
-  adjustment = c(-0.3, -0.2, -0.1, 0),
+  reps = c(10, 8, 6),
+  adjustment = -rev((seq_along(reps) - 1) * 5)/100,
   vertical_planning = vertical_constant,
   vertical_planning_control = list(),
   progression_table = progression_perc_drop,
   progression_table_control = list(volume = "normal")
 )
 
-scheme_step_reverse(
-  reps = c(10, 10, 10, 10),
-  adjustment = c(0, 3, 6, 9),
+scheme_plateau(
+  reps = c(5, 5, 5),
   vertical_planning = vertical_constant,
   vertical_planning_control = list(),
-  progression_table = progression_RIR_increment,
+  progression_table = progression_perc_drop,
   progression_table_control = list(volume = "normal")
 )
 
-scheme_wave_descending(
-  reps = c(6, 8, 10, 6, 8, 10),
-  adjustment = c(4, 2, 0, 6, 4, 2),
-  vertical_planning = vertical_linear,
+scheme_step(
+  reps = c(5, 5, 5),
+  adjustment = -rev((seq_along(reps) - 1) * 10)/100,
+  vertical_planning = vertical_constant,
   vertical_planning_control = list(),
-  progression_table = progression_RIR_increment,
-  progression_table_control = list(volume = "extensive")
+  progression_table = progression_perc_drop,
+  progression_table_control = list(volume = "intensive")
+)
+
+scheme_step_reverse(
+  reps = c(5, 5, 5),
+  adjustment = -((seq_along(reps) - 1) * 10)/100,
+  vertical_planning = vertical_constant,
+  vertical_planning_control = list(),
+  progression_table = progression_perc_drop,
+  progression_table_control = list(volume = "intensive")
+)
+
+scheme_wave_descending(
+  reps = c(6, 8, 10),
+  adjustment = -rev((seq_along(reps) - 1) * 5)/100,
+  vertical_planning = vertical_constant,
+  vertical_planning_control = list(),
+  progression_table = progression_perc_drop,
+  progression_table_control = list(volume = "normal")
 )
 
 scheme_light_heavy(
-  reps = c(6, 3, 6, 3, 6, 3),
-  adjustment = c(0, -0.2, 0, -0.2, 0, -0.2),
+  reps = c(10, 5, 10, 5),
+  adjustment = c(-0.1, 0)[(seq_along(reps)\%\%2) + 1],
   vertical_planning = vertical_constant,
   vertical_planning_control = list(),
   progression_table = progression_perc_drop,
@@ -77,46 +80,76 @@ scheme_light_heavy(
 )
 
 scheme_pyramid(
-  reps = c(12, 10, 8, 8, 10, 12),
+  reps = c(12, 10, 8, 10, 12),
   adjustment = 0,
-  vertical_planning = vertical_linear,
-  vertical_planning_control = list(reps_change = c(0, -2, -4, -6)),
-  progression_table = progression_RIR_increment,
+  vertical_planning = vertical_constant,
+  vertical_planning_control = list(),
+  progression_table = progression_perc_drop,
   progression_table_control = list(volume = "extensive")
 )
 
 scheme_pyramid_reverse(
-  reps = c(8, 10, 12, 12, 10, 8),
+  reps = c(8, 10, 12, 10, 8),
   adjustment = 0,
-  vertical_planning = vertical_linear,
-  vertical_planning_control = list(reps_change = c(0, -2, -4, -6)),
-  progression_table = progression_RIR_increment,
+  vertical_planning = vertical_constant,
+  vertical_planning_control = list(),
+  progression_table = progression_perc_drop,
   progression_table_control = list(volume = "extensive")
 )
 
 scheme_rep_acc(
-  reps = c(7, 7, 7),
+  reps = c(10, 10, 10),
   adjustment = 0,
-  vertical_planning_control = list(step = rep(-3, 4)),
-  progression_table = progression_RIR_increment,
-  progression_table_control = list(volume = "extensive")
+  vertical_planning_control = list(step = rep(0, 4)),
+  progression_table = progression_perc_drop,
+  progression_table_control = list(volume = "normal")
 )
+
+scheme_ladder(
+  reps = c(3, 5, 10),
+  adjustment = 0,
+  vertical_planning = vertical_constant,
+  vertical_planning_control = list(),
+  progression_table = progression_perc_drop,
+  progression_table_control = list(volume = "normal")
+)
+
+scheme_manual(
+  index = NULL,
+  step,
+  sets = 1,
+  reps,
+  adjustment = 0,
+  perc_1RM = NULL,
+  progression_table = progression_perc_drop,
+  progression_table_control = list(volume = "normal")
+)
+
+scheme_perc_1RM(reps = c(5, 5, 5), perc_1RM = c(0.4, 0.5, 0.6), n_steps = 4)
 }
 \arguments{
 \item{reps}{Numeric vector indicating reps prescription}
 
-\item{adjustment}{Numeric vector indicating adjustments. Forwarded to \code{progression_table}.
-If the \code{progression_table} is \code{\link{progression_RIR_increment}}, \code{adjustment} will be done
-using RIR. On the other hand, if \code{\link{progression_perc_drop}} is used, \code{adjustment} will be done
-using 1RM percentage}
+\item{adjustment}{Numeric vector indicating adjustments. Forwarded to \code{progression_table}.}
 
-\item{vertical_planning}{Vertical planning function. Default is \code{\link{vertical_linear}}}
+\item{vertical_planning}{Vertical planning function. Default is \code{\link{vertical_constant}}}
 
-\item{vertical_planning_control}{Arguments forwarded to the \code{vertical_planning} function}
+\item{vertical_planning_control}{Arguments forwarded to the \code{\link{vertical_planning}} function}
 
-\item{progression_table}{Progression table function. Default is \code{\link{progression_RIR_increment}}}
+\item{progression_table}{Progression table function. Default is \code{\link{progression_perc_drop}}}
 
-\item{progression_table_control}{Arguments forwarded to the \code{progression_table} function}
+\item{progression_table_control}{Arguments forwarded to the \code{\link{progression_table}} function}
+
+\item{index}{Numeric vector. If not provided, index will be
+create using sequence of \code{step}}
+
+\item{step}{Numeric vector}
+
+\item{sets}{Numeric vector. Used to replicate reps and adjustments}
+
+\item{perc_1RM}{Numeric vector of user provided 1RM percentage}
+
+\item{n_steps}{How many progression steps to generate? Default is 4}
 }
 \value{
 Data frame with the following columns: \code{reps}, \code{index}, \code{step},
@@ -127,38 +160,58 @@ Set and Rep Schemes
 }
 \section{Functions}{
 \itemize{
-\item \code{scheme_generic}: Generic set and rep scheme.
+\item \code{scheme_generic()}: Generic set and rep scheme.
 \code{scheme_generic} is called in all other set and rep schemes - only the default parameters
 differ to make easier and quicker schemes writing and groupings
 
-\item \code{scheme_wave}: Wave set and rep scheme
+\item \code{scheme_wave()}: Wave set and rep scheme
 
-\item \code{scheme_plateau}: Plateau set and rep scheme
+\item \code{scheme_plateau()}: Plateau set and rep scheme
 
-\item \code{scheme_step}: Step set and rep scheme
+\item \code{scheme_step()}: Step set and rep scheme
 
-\item \code{scheme_step_reverse}: Reverse Step set and rep scheme
+\item \code{scheme_step_reverse()}: Reverse Step set and rep scheme
 
-\item \code{scheme_wave_descending}: Descending Wave set and rep scheme
+\item \code{scheme_wave_descending()}: Descending Wave set and rep scheme
 
-\item \code{scheme_light_heavy}: Light-Heavy set and rep scheme
+\item \code{scheme_light_heavy()}: Light-Heavy set and rep scheme.
+Please note that the \code{adjustment} column in the output
+will be wrong, hence set to \code{NA}
 
-\item \code{scheme_pyramid}: Pyramid set and rep scheme
+\item \code{scheme_pyramid()}: Pyramid set and rep scheme
 
-\item \code{scheme_pyramid_reverse}: Reverse Pyramid set and rep scheme
+\item \code{scheme_pyramid_reverse()}: Reverse Pyramid set and rep scheme
 
-\item \code{scheme_rep_acc}: Rep Accumulation set and rep scheme
+\item \code{scheme_rep_acc()}: Rep Accumulation set and rep scheme
+
+\item \code{scheme_ladder()}: Ladder set and rep scheme.
+Please note that the \code{adjustment} column in the output
+will be wrong, hence set to \code{NA}
+
+\item \code{scheme_manual()}: Manual set and rep scheme
+
+\item \code{scheme_perc_1RM()}: Manual \%1RM set and rep scheme
+
 }}
-
 \examples{
-scheme_generic()
+scheme_generic(
+  reps = c(8, 6, 4, 8, 6, 4),
+  # Adjusting using lower \%1RM (RIR Increment method used)
+  adjustment = c(4, 2, 0, 6, 4, 2),
+  vertical_planning = vertical_linear,
+  vertical_planning_control = list(reps_change = c(0, -2, -4)),
+  progression_table = progression_RIR_increment,
+  progression_table_control = list(volume = "extensive")
+)
 
 # Wave set and rep schemes
---------------------------
-  scheme_wave()
+# --------------------------
+scheme_wave()
 
 scheme_wave(
   reps = c(8, 6, 4, 8, 6, 4),
+  # Second wave with higher intensity
+  adjustment = c(-0.25, -0.15, 0.05, -0.2, -0.1, 0),
   vertical_planning = vertical_block,
   progression_table = progression_perc_drop,
   progression_table_control = list(type = "ballistic")
@@ -178,7 +231,7 @@ scheme_wave(
 
 # Adjusted using RIR inc
 # This time we adjust first wave as well, first two sets easier
-scheme_wave(
+scheme <- scheme_wave(
   reps = c(8, 6, 4, 8, 6, 4),
   # Adjusting using lower \%1RM (RIR Increment method used)
   adjustment = c(4, 2, 0, 6, 4, 2),
@@ -187,48 +240,180 @@ scheme_wave(
   progression_table = progression_RIR_increment,
   progression_table_control = list(volume = "extensive")
 )
+plot(scheme)
 
 # Plateau set and rep schemes
---------------------------
-  scheme_plateau()
+# --------------------------
+scheme_plateau()
 
-scheme_plateau(
+scheme <- scheme_plateau(
   reps = c(3, 3, 3),
   progression_table_control = list(type = "ballistic")
 )
+plot(scheme)
 
 # Step set and rep schemes
---------------------------
-  scheme_step()
+# --------------------------
+scheme_step()
 
-scheme_step(
+scheme <- scheme_step(
   reps = c(2, 2, 2),
   adjustment = c(-0.1, -0.05, 0),
   vertical_planning = vertical_linear_reverse,
   progression_table_control = list(type = "ballistic")
 )
+plot(scheme)
 
 # Reverse Step set and rep schemes
---------------------------
-  scheme_step_reverse()
+#- -------------------------
+scheme <- scheme_step_reverse()
+plot(scheme)
 
 # Descending Wave set and rep schemes
---------------------------
-  scheme_wave_descending()
+# --------------------------
+scheme <- scheme_wave_descending()
+plot(scheme)
 
 # Light-Heavy set and rep schemes
---------------------------
-  scheme_light_heavy()
+# --------------------------
+scheme <- scheme_light_heavy()
+plot(scheme)
 
 # Pyramid set and rep schemes
---------------------------
-  scheme_pyramid()
+# --------------------------
+scheme <- scheme_pyramid()
+plot(scheme)
 
 # Reverse Pyramid set and rep schemes
---------------------------
-  scheme_pyramid_reverse()
+# --------------------------
+scheme <- scheme_pyramid_reverse()
+plot(scheme)
 
 # Rep Accumulation set and rep schemes
---------------------------
-  scheme_rep_acc()
+# --------------------------
+scheme_rep_acc()
+
+# Generate Wave scheme with rep accumulation vertical progression
+# This functions doesn't allow you to use different vertical planning
+# options
+scheme <- scheme_rep_acc(reps = c(10, 8, 6), adjustment = c(-0.1, -0.05, 0))
+plot(scheme)
+
+# Other options is to use `.vertical_rep_accumulation.post()` and
+# apply it after
+# The default vertical progression is `vertical_const()`
+scheme <- scheme_wave(reps = c(10, 8, 6), adjustment = c(-0.1, -0.05, 0))
+
+.vertical_rep_accumulation.post(scheme)
+
+# We can also create "undulating" rep decrements
+.vertical_rep_accumulation.post(
+  scheme,
+  rep_decrement = c(-3, -1, -2, 0)
+)
+
+# `scheme_rep_acc` will not allow you to generate `scheme_ladder()`
+# and `scheme_scheme_light_heavy()`
+# You must use `.vertical_rep_accumulation.post()` to do so
+scheme <- scheme_ladder()
+scheme <- .vertical_rep_accumulation.post(scheme)
+plot(scheme)
+
+# Please note that reps < 1 are removed. If you do not want this,
+# use `remove_reps = FALSE` parameter
+scheme <- scheme_ladder()
+scheme <- .vertical_rep_accumulation.post(scheme, remove_reps = FALSE)
+plot(scheme)
+
+# Ladder set and rep schemes
+# --------------------------
+scheme <- scheme_ladder()
+plot(scheme)
+
+# Manual set and rep schemes
+# --------------------------
+scheme_df <- data.frame(
+  index = 1, # Use this just as an example
+  step = c(-3, -2, -1, 0),
+  # Sets are just an easy way to repeat reps and adjustment
+  sets = c(5, 4, 3, 2),
+  reps = c(5, 4, 3, 2),
+  adjustment = 0
+)
+
+# Step index is estimated to be sequences of steps
+# If you want specific indexes, use it as an argument (see next example)
+scheme <- scheme_manual(
+  step = scheme_df$step,
+  sets = scheme_df$sets,
+  reps = scheme_df$reps,
+  adjustment = scheme_df$adjustment
+)
+
+plot(scheme)
+
+# Here we are going to provide our own index
+scheme <- scheme_manual(
+  index = scheme_df$index,
+  step = scheme_df$step,
+  sets = scheme_df$sets,
+  reps = scheme_df$reps,
+  adjustment = scheme_df$adjustment
+)
+
+plot(scheme)
+
+# More complicated example
+scheme_df <- data.frame(
+  step = c(-3, -3, -3, -3, -2, -2, -2, -1, -1, 0),
+  sets = 1,
+  reps = c(5, 5, 5, 5, 3, 2, 1, 2, 1, 1),
+  adjustment = c(0, -0.05, -0.1, -0.15, -0.1, -0.05, 0, -0.1, 0, 0)
+)
+
+scheme_df
+
+scheme <- scheme_manual(
+  step = scheme_df$step,
+  sets = scheme_df$sets,
+  reps = scheme_df$reps,
+  adjustment = scheme_df$adjustment,
+
+  # Select another progression table
+  progression_table = progression_DI,
+  # Extra parameters for the progression table
+  progression_table_control = list(
+    volume = "extensive",
+    type = "ballistic",
+    max_perc_1RM_func = max_perc_1RM_linear,
+    klin = 36
+  )
+)
+
+plot(scheme)
+
+# Provide \%1RM manually
+
+scheme_df <- data.frame(
+  index = rep(c(1, 2, 3, 4), each = 3),
+  reps = rep(c(5, 5, 5), 4),
+  perc_1RM = rep(c(0.4, 0.5, 0.6), 4)
+)
+
+warmup_scheme <- scheme_manual(
+  index = scheme_df$index,
+  reps = scheme_df$reps,
+  perc_1RM = scheme_df$perc_1RM
+)
+
+plot(warmup_scheme)
+# Manual \%1RM set and rep schemes
+# --------------------------
+warmup_scheme <- scheme_perc_1RM(
+  reps = c(10, 8, 6),
+  perc_1RM = c(0.4, 0.5, 0.6),
+  n_steps = 3
+)
+
+plot(warmup_scheme)
 }
