@@ -1,5 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd.  Please edit that file -->
 
 # `{STMr}` Package <img src="man/figures/logo.png" align="right" width="200" />
 
@@ -9,6 +9,26 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/STMr)](https://CRAN.R-project.org/package=STMr)
 <!-- badges: end -->
+
+**Table of Contents**
+
+*This is longer README file, so here is the TOC for easier jumping to
+topics*
+
+-   [Introduction](#introduction)
+-   [Installation](#installation)
+-   [Reps-Max Functions](#reps-max-functions)
+-   [Adjustment Functions](#adjustment-functions)
+-   [Progressions](#progressions)
+-   [Vertical Planning](#vertical-planning)
+-   [Set and Rep Schemes](#set-and-rep-schemes)
+-   [Release](#release)
+-   [Estimation](#estimation)
+-   [Scheme plotting tips](#scheme-plotting-tips)
+-   [Further information](#further-information)
+-   [How to cite `{STMr}`](#how-to-cite-stmr)
+
+## Introduction
 
 `{STMr}` (short of *Strength Training Manual R-functions*) package is
 created to help sports scientists and strength coaches estimate strength
@@ -184,8 +204,8 @@ of functions, which apply adjustments to selected Reps-Max
 function/relationship.
 
 Adjustment method is the main element of the progression table and
-represents the method for progression (see [Progression](#progression)
-section). Although the adjustment of the %1RM used for the target reps
+represents the method for progression (see \[Progression\] section).
+Although the adjustment of the %1RM used for the target reps
 (`adj_perc_1RM_` family of functions) is the most common, you can also
 adjust the reps for target %1RM (`adj_reps_` family of functions).
 Default Reps-Max function used across adjustment functions is the
@@ -246,9 +266,8 @@ adj_perc_1RM_RIR(
 #> [1] 0.735
 ```
 
-Although I will show you simpler solution to this (see
-[Progression](#progression) section), here is how you can create simple
-RIR adjustment table:
+Although I will show you simpler solution to this (see \[Progression\]
+section), here is how you can create simple RIR adjustment table:
 
 ``` r
 # install.packages("knitr", dependencies = TRUE)
@@ -297,7 +316,7 @@ get_reps(0.85, method = "RIR", model = "modified epley", adjustment = 2, kmod = 
 #> [1] 4.04
 ```
 
-## Progression
+## Progressions
 
 Progressions (or progression tables) represent implemented adjustments
 in a systematic and organized manner across *progression steps* and
@@ -1126,15 +1145,15 @@ The next dataset is strength training log:
 data(strength_training_log)
 
 head(strength_training_log)
-#> # A tibble: 6 × 7
-#>   phase  week session     set weight  reps  eRIR
-#>   <int> <int> <chr>     <int>  <dbl> <dbl> <dbl>
-#> 1     1     1 Session A     1   57.5    12    NA
-#> 2     1     1 Session A     2   62.5    10     5
-#> 3     1     1 Session A     3   70       8     3
-#> 4     1     1 Session A     4   55      12    NA
-#> 5     1     1 Session A     5   60      10    NA
-#> 6     1     1 Session A     6   65       8     4
+#> # A tibble: 6 × 8
+#>   phase  week   day session     set weight  reps  eRIR
+#>   <int> <int> <dbl> <chr>     <int>  <dbl> <dbl> <dbl>
+#> 1     1     1     1 Session A     1   57.5    12    NA
+#> 2     1     1     1 Session A     2   62.5    10     5
+#> 3     1     1     1 Session A     3   70       8     3
+#> 4     1     1     1 Session A     4   55      12    NA
+#> 5     1     1     1 Session A     5   60      10    NA
+#> 6     1     1     1 Session A     6   65       8     4
 ```
 
 This dataset contains strength training log for a single athlete and
@@ -1643,8 +1662,8 @@ implemented in `{STMr}` package using the `nlrq()` function from the
 `_quantile`. You can also use the `...` feature of the quantile
 estimation functions to forward extra arguments to `nlrq()` function.
 
-For the “best” performance profile we can use 0.95 quantile, and for
-“worst” we can use 0.05 quantile. I will utilize Linear/Brzycki’s model.
+For the “best” performance profile we can use 0.9 quantile, and for
+“worst” we can use 0.1 quantile. I will utilize Linear/Brzycki’s model.
 For more information please refer to [Load-Exertion Tables And Their Use
 For
 Planning](https://complementarytraining.net/load-exertion-tables-and-their-use-for-planning-part-1/)
@@ -1655,7 +1674,7 @@ mq_best <- estimate_klin_1RM_quantile(
   weight = strength_training_log$weight,
   reps = strength_training_log$reps,
   eRIR = strength_training_log$eRIR,
-  tau = 0.95
+  tau = 0.9
 )
 
 summary(mq_best)
@@ -1665,21 +1684,21 @@ summary(mq_best)
 #>     tau = tau, control = list(maxiter = 10000, k = 2, InitialStepSize = 0, 
 #>         big = 1e+20, eps = 1e-07, beta = 0.97), trace = FALSE)
 #> 
-#> tau: [1] 0.95
+#> tau: [1] 0.9
 #> 
 #> Coefficients:
 #>      Value  Std. Error t value Pr(>|t|)
-#> klin  36.54   1.41      25.98    0.00  
-#> 1RM  107.95   1.64      65.82    0.00
+#> klin  36.88   1.48      24.91    0.00  
+#> 1RM  105.36   1.15      91.97    0.00
 coef(mq_best)
 #>  klin   1RM 
-#>  36.5 108.0
+#>  36.9 105.4
 
 mq_worst <- estimate_klin_1RM_quantile(
   weight = strength_training_log$weight,
   reps = strength_training_log$reps,
   eRIR = strength_training_log$eRIR,
-  tau = 0.05
+  tau = 0.1
 )
 
 summary(mq_worst)
@@ -1689,15 +1708,15 @@ summary(mq_worst)
 #>     tau = tau, control = list(maxiter = 10000, k = 2, InitialStepSize = 0, 
 #>         big = 1e+20, eps = 1e-07, beta = 0.97), trace = FALSE)
 #> 
-#> tau: [1] 0.05
+#> tau: [1] 0.1
 #> 
 #> Coefficients:
 #>      Value Std. Error t value Pr(>|t|)
-#> klin 28.50  4.21       6.78    0.00   
-#> 1RM  95.00  1.56      60.75    0.00
+#> klin 26.00  3.90       6.67    0.00   
+#> 1RM  97.50  1.89      51.71    0.00
 coef(mq_worst)
 #> klin  1RM 
-#> 28.5 95.0
+#> 26.0 97.5
 ```
 
 Graphically, these profiles look like this:
@@ -1718,50 +1737,88 @@ gg +
 
 <img src="man/figures/README-unnamed-chunk-61-1.png" width="80%" style="display: block; margin: auto;" />
 
-In this example we have used all 12 weeks of strength training log data
-(i.e., pooled). We can perform some type of “rolling” analysis to get
-ideas of trends, particularly the estimated 1RM trend across time. In
-the following example, I am using rolling 3 weeks estimation of the
-“best” and “worst” 1RM:
+### Rolling estmation
+
+In the previous example we have used all 12 weeks of strength training
+log data (i.e., pooled). We can perform the *rolling* analysis using the
+`estimate_rolling_1RM()` function. `estimate_rolling_1RM()` allows you
+to use different functions (i.e., `estimate_k_1RM()`,
+`estimate_kmod_1RM()`, `estimate_klin_1RM()`,
+`estimate_k_1RM_quantile()`, `estimate_kmod_1RM_quantile()`, and
+`estimate_klin_1RM_quantile()`). Here is an example using previous 6
+days (i.e., one phase, or 3 rolling weeks):
 
 ``` r
-estimate_1RM <- function(df_log, week_start, week_end) {
-  df <- df_log %>%
-    mutate(index = (phase - 1) * 3 + week) %>%
-    filter(index >= week_start & index <= week_end)
-
-  mq_best <- estimate_klin_1RM_quantile(
-    weight = df$weight,
-    reps = df$reps,
-    eRIR = df$eRIR,
-    tau = 0.95
-  )
-
-  mq_worst <- estimate_klin_1RM_quantile(
-    weight = df$weight,
-    reps = df$reps,
-    eRIR = df$eRIR,
-    tau = 0.05
-  )
-
-  tibble(best = coef(mq_best)[[2]], worst = coef(mq_worst)[[2]])
-}
-
-rolling_weeks <- tibble(week_start = seq(1, 10)) %>%
-  mutate(week_end = week_start + 2) %>%
-  rowwise() %>%
-  mutate(estimate_1RM(strength_training_log, week_start, week_end))
-
-ggplot(rolling_weeks, aes(x = week_end)) +
-  theme_bw() +
-  geom_line(aes(y = best)) +
-  geom_line(aes(y = worst), linetype = "dashed") +
-  scale_x_continuous(breaks = 1:12) +
-  xlab("Week") +
-  ylab("Estimated 1RM (kg)")
+estimate_rolling_1RM(
+  weight = strength_training_log$weight,
+  reps = strength_training_log$reps,
+  eRIR = strength_training_log$eRIR,
+  day_index = strength_training_log$day,
+  window = 6,
+  estimate_function = estimate_kmod_1RM_quantile,
+  tau = 0.9)
+#> # A tibble: 19 × 3
+#>    day_index   kmod `1RM`
+#>        <int>  <dbl> <dbl>
+#>  1         6 0.0404  98.8
+#>  2         7 0.0368  98.5
+#>  3         8 0.0400 101. 
+#>  4         9 0.0383 101. 
+#>  5        10 0.0431 104. 
+#>  6        11 0.0432 104. 
+#>  7        12 0.0455 106. 
+#>  8        13 0.0385 104. 
+#>  9        14 0.0385 104. 
+#> 10        15 0.0410 106. 
+#> 11        16 0.0415 107. 
+#> 12        17 0.0415 107. 
+#> 13        18 0.0410 106. 
+#> 14        19 0.0410 106. 
+#> 15        20 0.0415 107. 
+#> 16        21 0.0381 106. 
+#> 17        22 0.0381 106. 
+#> 18        23 0.0364 106. 
+#> 19        24 0.0382 107.
 ```
 
-<img src="man/figures/README-unnamed-chunk-62-1.png" width="80%" style="display: block; margin: auto;" />
+In the following example, I am using rolling 3 weeks estimation of the
+“best” and “worst” 1RM, as well as the `kmod` parameter using 0.1 and
+0.9 quantiles:
+
+``` r
+est_profiles <- function(.x) {
+  res <- estimate_rolling_1RM(
+    weight = strength_training_log$weight,
+    reps = strength_training_log$reps,
+    eRIR = strength_training_log$eRIR,
+    day_index = strength_training_log$day,
+    window = 6,
+    estimate_function = estimate_kmod_1RM_quantile,
+    tau = .x$tau)
+  
+  tibble(tau = .x$tau, res)
+}
+
+data.frame(tau = c(0.1, 0.9)) %>%
+  rowwise() %>%
+  do(est_profiles(.)) %>%
+  ungroup() %>%
+  pivot_longer(cols = -c(tau, day_index), names_to = "param") %>%
+  group_by(day_index, param) %>%
+  summarise(lower = min(value), upper = max(value)) %>%
+  ungroup() %>%
+  
+  # Plot
+  ggplot(aes(x = day_index)) +
+  theme_bw() +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = param), color = "black", alpha = 0.5) +
+  facet_wrap(~param, scales = "free_y") +
+  xlab("Day index") +
+  ylab(NULL) +
+  theme(legend.position = "none")
+```
+
+<img src="man/figures/README-unnamed-chunk-63-1.png" width="80%" style="display: block; margin: auto;" />
 
 This analysis represents novel technique and the time will tell how
 valid is it and how to interpret it correctly. But at least we have very
@@ -1790,7 +1847,7 @@ scheme <- scheme_wave(
 plot(scheme)
 ```
 
-<img src="man/figures/README-unnamed-chunk-63-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-64-1.png" width="80%" style="display: block; margin: auto;" />
 
 Another way to plot the scheme is using the `vertical` method.
 
@@ -1798,7 +1855,7 @@ Another way to plot the scheme is using the `vertical` method.
 plot(scheme, type = "vertical")
 ```
 
-<img src="man/figures/README-unnamed-chunk-64-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-65-1.png" width="80%" style="display: block; margin: auto;" />
 
 And the final method is to use `fraction` method, which is very similar
 to the Olympic weightlifting log notation:
@@ -1807,7 +1864,7 @@ to the Olympic weightlifting log notation:
 plot(scheme, type = "fraction")
 ```
 
-<img src="man/figures/README-unnamed-chunk-65-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-66-1.png" width="80%" style="display: block; margin: auto;" />
 
 To avoid printing `%`, which will make `%1RM` labels bigger, use
 `perc_str = ""`:
@@ -1816,7 +1873,7 @@ To avoid printing `%`, which will make `%1RM` labels bigger, use
 plot(scheme, perc_str = "")
 ```
 
-<img src="man/figures/README-unnamed-chunk-66-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-67-1.png" width="80%" style="display: block; margin: auto;" />
 
 ### Different label sizes
 
@@ -1827,7 +1884,7 @@ size. This can be useful later once we used facets.
 plot(scheme, font_size = 20)
 ```
 
-<img src="man/figures/README-unnamed-chunk-67-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-68-1.png" width="80%" style="display: block; margin: auto;" />
 
 The plotting allows for the flexible labels, using the `{ggfittext}`
 package, which fits the labels so they do not exit the bars. Here is an
@@ -1843,7 +1900,7 @@ scheme <- scheme_wave(
 plot(scheme)
 ```
 
-<img src="man/figures/README-unnamed-chunk-68-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-69-1.png" width="80%" style="display: block; margin: auto;" />
 
 Using the `size` argument, you can set the maximum label size. This is
 useful if you want to avoid having different sizes of labels on your
@@ -1854,7 +1911,7 @@ bigger than selected font size:
 plot(scheme, size = 5)
 ```
 
-<img src="man/figures/README-unnamed-chunk-69-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-70-1.png" width="80%" style="display: block; margin: auto;" />
 
 You can also set padding of the labels. Let’s remove `%` and set the
 padding:
@@ -1867,7 +1924,7 @@ plot(
   padding.y = grid::unit(0.2, "mm"),)
 ```
 
-<img src="man/figures/README-unnamed-chunk-70-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-71-1.png" width="80%" style="display: block; margin: auto;" />
 
 ### Creating facets
 
@@ -1898,7 +1955,7 @@ plot(scheme_df) +
   facet_wrap(~scheme)
 ```
 
-<img src="man/figures/README-unnamed-chunk-71-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-72-1.png" width="80%" style="display: block; margin: auto;" />
 
 ## Further information
 
@@ -1919,7 +1976,7 @@ citation("STMr")
 #> To cite 'STMr' in publications use:
 #> 
 #>   Mladen Jovanović (2022). {STMr}: Strength Training Manual R-Language
-#>   Functions. R package version 0.1.4. url:
+#>   Functions. R package version 0.1.4.9000. url:
 #>   https://github.com/mladenjovanovic/STMr
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -1927,7 +1984,7 @@ citation("STMr")
 #>   @Manual{,
 #>     title = {{STMr}: Strength Training Manual R-Language Functions},
 #>     author = {Mladen Jovanović},
-#>     note = {R package version 0.1.4},
+#>     note = {R package version 0.1.4.9000},
 #>     year = {2022},
 #>     address = {Belgrade, Serbia},
 #>     url = {https://github.com/mladenjovanovic/STMr},
