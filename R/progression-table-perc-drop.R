@@ -1,9 +1,5 @@
 #' @describeIn progression_table Perc Drop progression table (see Strength Training Manual)
 #' @export
-#' @references
-#'     Jovanović M. 2020. Strength Training Manual: The Agile Periodization Approach.
-#'     Independently published.
-#'
 #' @examples
 #' # ------------------------------------------
 #' # Progression Perc Drop
@@ -29,8 +25,6 @@ progression_perc_drop <- function(reps,
                                   type = "grinding",
                                   mfactor = NULL,
                                   ...) {
-
-
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   rep_start <- NULL
@@ -59,12 +53,21 @@ progression_perc_drop <- function(reps,
   )
 
   params <- data.frame(
-    volume = c("intensive", "normal", "extensive", "intensive", "normal", "extensive"),
-    type = c("grinding", "grinding", "grinding", "ballistic", "ballistic", "ballistic"),
-    rep_start = c(0, -0.025, -0.05, 0, -0.025, -0.05),
-    rep_step = c(0, ((-0.05 - -0.025) / 11), ((-0.1 - -0.05) / 11), 0, -0.0025, -0.005),
-    inc_start = c(-0.025, -0.025, -0.025, -0.025, -0.025, -0.025),
-    inc_step = c(((-0.05 - -0.025) / 11), ((-0.05 - -0.025) / 11), ((-0.05 - -0.025) / 11), -0.005, -0.005, -0.005)
+    volume = c(
+      "intensive", "normal", "extensive",
+      "intensive", "normal", "extensive",
+      "intensive", "normal", "extensive"
+    ),
+    type = c(
+      "grinding", "grinding", "grinding",
+      "ballistic", "ballistic", "ballistic",
+      "conservative", "conservative", "conservative"
+    ),
+    # For conservative, I am simply copying ballistic adjustments
+    rep_start = c(0, -0.025, -0.05, 0, -0.025, -0.05, 0, -0.025, -0.05),
+    rep_step = c(0, ((-0.05 - -0.025) / 11), ((-0.1 - -0.05) / 11), 0, -0.0025, -0.005, 0, -0.0025, -0.005),
+    inc_start = c(-0.025, -0.025, -0.025, -0.025, -0.025, -0.025, -0.025, -0.025, -0.025),
+    inc_step = c(((-0.05 - -0.025) / 11), ((-0.05 - -0.025) / 11), ((-0.05 - -0.025) / 11), -0.005, -0.005, -0.005, -0.005, -0.005, -0.005)
   )
 
   # Merge them together

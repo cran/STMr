@@ -19,12 +19,11 @@
 #'   kmod = 0.0388
 #' )
 generate_progression_table <- function(progression_table,
-                                       type = c("grinding", "ballistic"),
+                                       type = c("grinding", "ballistic", "conservative"),
                                        volume = c("intensive", "normal", "extensive"),
-                                       reps = 1:12,
+                                       reps = 1:5,
                                        step = seq(-3, 0, 1),
                                        ...) {
-
   # Perform checks
   check_volume(volume)
   check_type(type)

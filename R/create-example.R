@@ -4,7 +4,8 @@
 #' @param progression_table Progression table function
 #' @param reps Numeric vector. Default is \code{c(3, 5, 10)}
 #' @param volume Character vector. Default is \code{c("intensive", "normal", "extensive")}
-#' @param type Character vector. Type of max rep table. Options are grinding (Default) and ballistic
+#' @param type Character vector. Type of max rep table. Options are grinding (Default), ballistic,
+#'     and conservative
 #' @param ... Extra arguments forwarded to \code{progression_table}
 #' @return Data frame with the following structure
 #'   \describe{
@@ -35,7 +36,6 @@ create_example <- function(progression_table,
                            volume = c("intensive", "normal", "extensive"),
                            type = c("grinding", "ballistic"),
                            ...) {
-
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   step <- NULL

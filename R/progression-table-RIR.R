@@ -41,8 +41,6 @@ progression_RIR <- function(reps,
                             step_increment = 1,
                             volume_increment = step_increment,
                             ...) {
-
-
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   rep_start <- NULL
@@ -102,10 +100,6 @@ progression_RIR <- function(reps,
 
 #' @describeIn progression_table RIR Increment progression table (see Strength Training Manual)
 #' @export
-#' @references
-#'     Jovanović M. 2020. Strength Training Manual: The Agile Periodization Approach.
-#'     Independently published.
-#'
 #' @examples
 #' # ------------------------------------------
 #' # Progression RIR Increment
@@ -131,7 +125,6 @@ progression_RIR_increment <- function(reps,
                                       type = "grinding",
                                       mfactor = NULL,
                                       ...) {
-
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   rep_start <- NULL
@@ -160,12 +153,21 @@ progression_RIR_increment <- function(reps,
   )
 
   params <- data.frame(
-    volume = c("intensive", "normal", "extensive", "intensive", "normal", "extensive"),
-    type = c("grinding", "grinding", "grinding", "ballistic", "ballistic", "ballistic"),
-    rep_start = c(0, 1, 2, 0, 1, 2),
-    rep_step = c(0, ((3 - 1) / 11), ((6 - 2) / 11), 0, 0.2, 0.4),
-    inc_start = c(1, 1, 1, 1, 1, 1),
-    inc_step = c(((2 - 1) / 11), ((2 - 1) / 11), ((2 - 1) / 11), 0.2, 0.2, 0.2)
+    volume = c(
+      "intensive", "normal", "extensive",
+      "intensive", "normal", "extensive",
+      "intensive", "normal", "extensive"
+    ),
+    type = c(
+      "grinding", "grinding", "grinding",
+      "ballistic", "ballistic", "ballistic",
+      "conservative", "conservative", "conservative"
+    ),
+    # For conservative, I am simply copying ballistic adjustments
+    rep_start = c(0, 1, 2, 0, 1, 2, 0, 1, 2),
+    rep_step = c(0, ((3 - 1) / 11), ((6 - 2) / 11), 0, 0.2, 0.4, 0, 0.2, 0.4),
+    inc_start = c(1, 1, 1, 1, 1, 1, 1, 1, 1),
+    inc_step = c(((2 - 1) / 11), ((2 - 1) / 11), ((2 - 1) / 11), 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
   )
 
   # Merge them together

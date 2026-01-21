@@ -4,7 +4,7 @@
 #'
 #' @param progression_table Function for creating progression table
 #' @param signif_digits Rounding numbers for plotting. Default is 3
-#' @param adjustment_multiplier Factor to multiply the adjustment. Useful when converting to percentage.
+#' @param multiplier Factor to multiply the adjustment. Useful when converting to percentage.
 #'     Default is 1
 #' @param plot Character string. Options include "%1RM" (default) and "adjustment"
 #' @param font_size Numeric. Default is 14
@@ -25,10 +25,9 @@
 plot_progression_table <- function(progression_table,
                                    plot = "%1RM",
                                    signif_digits = 3,
-                                   adjustment_multiplier = 1,
+                                   multiplier = 1,
                                    font_size = 14,
                                    ...) {
-
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   perc_1RM <- NULL
@@ -44,20 +43,20 @@ plot_progression_table <- function(progression_table,
 
   progression_tbl$volume <- factor(
     progression_tbl$volume,
-    levels = c("intensive", "normal", "extensive")
+    levels = rev(c("intensive", "normal", "extensive"))
   )
 
   progression_tbl$type <- factor(
     progression_tbl$type,
-    levels = c("grinding", "ballistic")
+    levels = c("grinding", "ballistic", "conservative")
   )
 
   progression_tbl$reps <- factor(progression_tbl$reps)
   progression_tbl$step <- factor(progression_tbl$step)
-  progression_tbl$perc_1RM <- signif(progression_tbl$perc_1RM * 100, signif_digits)
-  progression_tbl$adjustment <- signif(
-    progression_tbl$adjustment * adjustment_multiplier,
-    signif_digits
+  progression_tbl$perc_1RM <- sig_pad(progression_tbl$perc_1RM * 100, sig = signif_digits)
+  progression_tbl$adjustment <- sig_pad(
+    progression_tbl$adjustment * multiplier,
+    sig = signif_digits
   )
 
   gg <- switch(plot,
